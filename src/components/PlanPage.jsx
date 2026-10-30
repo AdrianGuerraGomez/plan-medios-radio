@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { iconComments, iconNext, iconPrev, iconPrint } from "../lib/icons";
 import { BRANDS } from "../config";
-import { inMonth, monthInfo, monthTitle, nextMonthKey, shiftMonthKey, spotError } from "../lib/plan";
+import { inMonth, monthHeading, monthInfo, nextMonthKey, shiftMonthKey, spotError } from "../lib/plan";
 import { useSpots } from "../lib/useSpots";
 import { useMonthThread } from "../lib/useMonthThread";
 import { useProfiles } from "../lib/useProfiles";
@@ -62,7 +62,7 @@ export default function PlanPage({ user, onSignOut }) {
     .sort((a, b) => BRANDS.indexOf(a.brand) - BRANDS.indexOf(b.brand) || a.start.localeCompare(b.start));
 
   useEffect(() => {
-    document.title = `Plan de medios Radio ${monthTitle(M)}`; // nombre sugerido del PDF
+    document.title = `Radio | ${monthHeading(M)}`; // pestaña del navegador y nombre sugerido del PDF
     try { localStorage.setItem(MONTH_KEY, ym); } catch { /* sin almacenamiento local */ }
   }, [M, ym]);
 
@@ -84,7 +84,7 @@ export default function PlanPage({ user, onSignOut }) {
     <>
       <header className="top">
         <div className="title">
-          <h1>Radio — {monthTitle(M)}</h1>
+          <h1>Radio | {monthHeading(M)}</h1>
           <StatusBadge status={thread.status} onChange={s => thread.post({ body: "", status: s })} />
         </div>
         <div className="nav">

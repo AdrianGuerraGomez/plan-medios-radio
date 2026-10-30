@@ -30,6 +30,9 @@ export function monthInfo(ym) {
 
 export const monthTitle = M => `${MONTHS_LONG[M.m - 1]} ${M.y}`;
 
+/** "Noviembre 2026", con mayúscula inicial, para títulos. */
+export const monthHeading = M => { const t = monthTitle(M); return t[0].toUpperCase() + t.slice(1); };
+
 const formatDay = d => `${d.slice(8)} ${MONTHS_SHORT[+d.slice(5, 7) - 1]}`;
 const dayOf = d => +d.slice(8);
 
