@@ -4,7 +4,7 @@ export const BRANDS = ["SEAT", "CUPRA", "CHANGAN", "EBRO", "ACFU"];
 export const BRAND_COLORS = {
   SEAT: "#CF2738",
   CUPRA: "#7405A6",
-  CHANGAN: "#00FC71",
+  CHANGAN: "#63D48B",
   EBRO: "#0076FC",
   ACFU: "#FC9B00"
 };
