@@ -91,7 +91,7 @@ export default function PlanPage({ user, onSignOut }) {
           <button onClick={() => setYm(shiftMonthKey(ym, -1))} title="Mes anterior" aria-label="Mes anterior"><FontAwesomeIcon icon={iconPrev} /></button>
           <input type="month" value={ym} onChange={e => e.target.value && setYm(e.target.value)} aria-label="Mes" />
           <button onClick={() => setYm(shiftMonthKey(ym, 1))} title="Mes siguiente" aria-label="Mes siguiente"><FontAwesomeIcon icon={iconNext} /></button>
-          <button className="pri" onClick={() => window.print()}><FontAwesomeIcon icon={iconPrint} /> Imprimir / Guardar PDF</button>
+          <button className="pri" onClick={() => window.print()} title="Imprimir / Guardar PDF" aria-label="Imprimir / Guardar PDF"><FontAwesomeIcon icon={iconPrint} /><span className="btn-text"> Imprimir / Guardar PDF</span></button>
           <button
             className={`icon-btn${panelOpen ? " active" : ""}`}
             onClick={() => setPanelOpen(o => !o)}
