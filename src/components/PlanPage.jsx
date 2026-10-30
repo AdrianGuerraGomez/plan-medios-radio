@@ -4,7 +4,7 @@ import { inMonth, monthInfo, monthTitle, nextMonthKey, shiftMonthKey, spotError 
 import { useSpots } from "../lib/useSpots";
 import Gantt from "./Gantt";
 import SpotsTable from "./SpotsTable";
-import Summary from "./Summary";
+import UserMenu from "./UserMenu";
 
 const MONTH_KEY = "planRadio.month";
 
@@ -56,8 +56,7 @@ export default function PlanPage({ user, onSignOut }) {
           <input type="month" value={ym} onChange={e => e.target.value && setYm(e.target.value)} aria-label="Mes" />
           <button onClick={() => setYm(shiftMonthKey(ym, 1))} title="Mes siguiente" aria-label="Mes siguiente">›</button>
           <button className="pri" onClick={() => window.print()}>🖨 Imprimir / guardar PDF</button>
-          <span className="user muted" title={user.email}>{saving ? "Guardando…" : user.email}</span>
-          <button onClick={handleSignOut}>Salir</button>
+          <UserMenu email={user.email} saving={saving} onSignOut={handleSignOut} />
         </div>
       </div>
 
@@ -79,7 +78,6 @@ export default function PlanPage({ user, onSignOut }) {
             onDelete={handleDelete}
             onAdd={handleAdd}
           />
-          <Summary spots={spots} M={M} />
         </>
       )}
     </>
