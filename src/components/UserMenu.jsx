@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
+import { useDismiss } from "../lib/useDismiss";
 
 /** Dos primeras letras de la parte del correo antes de la @, en mayúsculas. */
 const initials = email => (email.split("@")[0].replace(/[^a-z0-9]/gi, "").slice(0, 2) || "?").toUpperCase();
@@ -6,19 +7,7 @@ const initials = email => (email.split("@")[0].replace(/[^a-z0-9]/gi, "").slice(
 export default function UserMenu({ email, saving, onSignOut }) {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
-
-  // Cierra el menú al pulsar fuera o con Escape.
-  useEffect(() => {
-    if (!open) return;
-    const onClick = e => { if (!ref.current.contains(e.target)) setOpen(false); };
-    const onKey = e => { if (e.key === "Escape") setOpen(false); };
-    document.addEventListener("mousedown", onClick);
-    document.addEventListener("keydown", onKey);
-    return () => {
-      document.removeEventListener("mousedown", onClick);
-      document.removeEventListener("keydown", onKey);
-    };
-  }, [open]);
+  useDismiss(ref, open, useCallback(() => setOpen(false), []));
 
   const status = saving ? "Guardando…" : "Todo guardado";
 
