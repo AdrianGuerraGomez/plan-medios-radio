@@ -2,11 +2,11 @@
 export const BRANDS = ["SEAT", "CUPRA", "CHANGAN", "EBRO", "ACFU"];
 
 export const BRAND_COLORS = {
-  SEAT: "#c4392f",
-  CUPRA: "#a8672a",
-  CHANGAN: "#2b6cb0",
-  EBRO: "#2f855a",
-  ACFU: "#7b5ea7"
+  SEAT: "#CF2738",
+  CUPRA: "#7405A6",
+  CHANGAN: "#00FC71",
+  EBRO: "#0076FC",
+  ACFU: "#FC9B00"
 };
 // =========================================================
 
