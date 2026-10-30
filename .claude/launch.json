@@ -1,0 +1,6 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    { "name": "mock", "runtimeExecutable": "/Users/adrianguerragomez/Desktop/adri/GITHUB/plan-medios-radio/node_modules/.bin/vite", "runtimeArgs": ["--config", "vite.mock.config.mjs"], "port": 5199 }
+  ]
+}
