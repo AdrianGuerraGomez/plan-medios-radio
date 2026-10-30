@@ -50,12 +50,12 @@ export default function PlanPage({ user, onSignOut }) {
   return (
     <>
       <div className="top">
-        <h1>Plan de medios · Radio — {monthTitle(M)}</h1>
+        <h1>Radio — {monthTitle(M)}</h1>
         <div className="nav">
           <button onClick={() => setYm(shiftMonthKey(ym, -1))} title="Mes anterior" aria-label="Mes anterior">‹</button>
           <input type="month" value={ym} onChange={e => e.target.value && setYm(e.target.value)} aria-label="Mes" />
           <button onClick={() => setYm(shiftMonthKey(ym, 1))} title="Mes siguiente" aria-label="Mes siguiente">›</button>
-          <button className="pri" onClick={() => window.print()}>🖨 Imprimir / guardar PDF</button>
+          <button className="pri" onClick={() => window.print()}>🖨 Imprimir / Guardar PDF</button>
           <UserMenu email={user.email} saving={saving} onSignOut={handleSignOut} />
         </div>
       </div>
