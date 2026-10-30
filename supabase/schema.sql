@@ -181,3 +181,22 @@ begin
     end if;
   end loop;
 end $$;
+
+-- Hasta qué comentario ha visto cada persona en cada mes (para el contador de nuevos).
+create table if not exists public.month_reads (
+  user_id       uuid not null references public.profiles (id) on delete cascade default auth.uid(),
+  ym            text not null check (ym ~ '^\d{4}-\d{2}$'),
+  last_seen_at  timestamptz not null,
+  primary key (user_id, ym)
+);
+
+alter table public.month_reads enable row level security;
+drop policy if exists "Cada uno ve sus lecturas" on public.month_reads;
+create policy "Cada uno ve sus lecturas" on public.month_reads
+  for select to authenticated using (user_id = (select auth.uid()));
+drop policy if exists "Cada uno guarda sus lecturas" on public.month_reads;
+create policy "Cada uno guarda sus lecturas" on public.month_reads
+  for insert to authenticated with check (user_id = (select auth.uid()));
+drop policy if exists "Cada uno actualiza sus lecturas" on public.month_reads;
+create policy "Cada uno actualiza sus lecturas" on public.month_reads
+  for update to authenticated using (user_id = (select auth.uid())) with check (user_id = (select auth.uid()));

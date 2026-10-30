@@ -3,11 +3,9 @@ import { BRANDS } from "../config";
 import { inMonth, monthInfo, monthTitle, nextMonthKey, shiftMonthKey, spotError } from "../lib/plan";
 import { useSpots } from "../lib/useSpots";
 import { useMonthThread } from "../lib/useMonthThread";
-import { useNotifications } from "../lib/useNotifications";
 import { useProfiles } from "../lib/useProfiles";
 import CommentsPanel from "./CommentsPanel";
 import Gantt from "./Gantt";
-import NotificationsBell from "./NotificationsBell";
 import SpotsTable from "./SpotsTable";
 import StatusBadge from "./StatusBadge";
 import UserMenu from "./UserMenu";
@@ -35,21 +33,18 @@ export default function PlanPage({ user, onSignOut }) {
 
   const profiles = useProfiles();
   const thread = useMonthThread(ym, user.id);
-  const notifications = useNotifications(user.id);
   const [panelOpen, setPanelOpen] = useState(initialPanelOpen);
 
   useEffect(() => {
     try { localStorage.setItem(PANEL_KEY, panelOpen ? "1" : "0"); } catch { /* sin almacenamiento local */ }
   }, [panelOpen]);
 
-  // Con el panel abierto, los avisos de este mes se dan por leídos.
-  const { markRead } = thread;
-  const reloadNotifications = notifications.reload;
+  // Con el panel abierto, los comentarios del mes se dan por vistos (también los que lleguen).
+  const { markSeen } = thread;
   useEffect(() => {
-    if (panelOpen) markRead().then(changed => changed && reloadNotifications());
-  }, [panelOpen, markRead, reloadNotifications]);
-
-  const openMonthComments = target => { setYm(target); setPanelOpen(true); };
+    if (panelOpen) markSeen();
+  }, [panelOpen, markSeen]);
+  const unreadLabel = thread.unread === 1 ? "1 comentario nuevo" : `${thread.unread} comentarios nuevos`;
 
   // Filas de la tabla: se fijan al cambiar de mes o al cargar, para que una cuña no
   // desaparezca de la tabla mientras se le cambian las fechas. Las inválidas siempre se ven.
@@ -97,13 +92,12 @@ export default function PlanPage({ user, onSignOut }) {
             <button
               className={`icon-btn${panelOpen ? " active" : ""}`}
               onClick={() => setPanelOpen(o => !o)}
-              title={panelOpen ? "Ocultar comentarios" : "Ver comentarios"}
-              aria-label={`Comentarios del mes (${thread.comments.length})`}
+              title={panelOpen ? "Ocultar comentarios" : thread.unread ? unreadLabel : "Ver comentarios"}
+              aria-label={thread.unread ? `Comentarios del mes (${unreadLabel})` : "Comentarios del mes"}
               aria-pressed={panelOpen}
             >
-              💬{thread.comments.length > 0 && <span className="count neutral">{thread.comments.length}</span>}
+              💬{!panelOpen && thread.unread > 0 && <span className="count">{thread.unread > 9 ? "9+" : thread.unread}</span>}
             </button>
-            <NotificationsBell items={notifications.items} onOpen={openMonthComments} onMarkAllRead={notifications.markAllRead} />
             <UserMenu email={user.email} saving={saving} onSignOut={handleSignOut} />
           </div>
         </div>
