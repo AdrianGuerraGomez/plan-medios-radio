@@ -1,30 +1,38 @@
-/* ====== Paleta (estilo Trello) ======
-   Modo claro: fondo azul #0079BF. Modo oscuro: fondo azul marino #0C3953.
-   Las tarjetas son blancas (claro) o azul marino suave (oscuro); el panel de comentarios es siempre blanco. */
+/* ====== Paleta (estilo Trello, colores análogos: celeste, cian, azul, índigo y marino) ======
+   Modo claro: fondo azul #0079BF con gradiente. Modo oscuro: fondo azul marino #0C3953 con gradiente.
+   Tarjetas con borde fino, brillo superior y sombra en capas; el panel de comentarios es siempre blanco. */
 :root{
   --accent:#0079BF;--accent-h:#026AA7;--navy:#0C3953;--accent-soft:#E4F0F6;
-  --bg:#0079BF;--on-bg:#fff;--on-bg-mu:rgba(255,255,255,.82);--on-bg-btn:rgba(255,255,255,.2);--on-bg-btn-h:rgba(255,255,255,.32);
+  --sky:#29A9E0;--cyan:#00A3BF;--indigo:#4F5BD5;
+  --bg:#0079BF;
+  --bg-grad:radial-gradient(1100px 620px at -5% -10%,rgba(41,169,224,.75),transparent 60%),radial-gradient(900px 700px at 105% 110%,rgba(79,91,213,.6),transparent 60%),linear-gradient(160deg,#0079BF 0%,#0069A8 55%,#0C5A94 100%);
+  --on-bg:#fff;--on-bg-mu:rgba(255,255,255,.82);--on-bg-btn:rgba(255,255,255,.2);--on-bg-btn-h:rgba(255,255,255,.32);
   --card:#fff;--tx:#172B4D;--mu:#5E6C84;--bd:#DFE1E6;--we:#F4F5F7;--gap:#FFEBE6;--gapt:#BF2600;
-  --kpi:#0C3953;--avatar:#0C3953;--shadow:0 1px 2px rgba(9,30,66,.12),0 4px 14px rgba(9,30,66,.14);
-  --st-draft-bg:#EBECF0;--st-draft-tx:#42526E;--st-review-bg:#FFF0B3;--st-review-tx:#7A5200;--st-approved-bg:#E3FCEF;--st-approved-tx:#006644;
+  --kpi:#0C3953;--avatar:#0C3953;
+  --card-bg:linear-gradient(180deg,#fff 0%,#F7F9FC 100%);--card-bd:rgba(9,30,66,.10);--card-hl:rgba(255,255,255,.95);
+  --shadow:0 1px 2px rgba(9,30,66,.10),0 10px 26px -8px rgba(9,30,66,.30);
+  --st-draft-bg:#EBECF0;--st-draft-tx:#42526E;--st-review-bg:#E9EBFF;--st-review-tx:#3B44A8;--st-approved-bg:#E3FCEF;--st-approved-tx:#006644;
   --select-arrow:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%235E6C84' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   color-scheme:light
 }
 /* Modo oscuro: lo activa el botón de la cabecera (o el sistema, si no se ha elegido) con data-theme="dark". */
 :root[data-theme="dark"]{
   --bg:#0C3953;
+  --bg-grad:radial-gradient(1100px 620px at -5% -10%,rgba(0,163,191,.35),transparent 60%),radial-gradient(900px 700px at 105% 110%,rgba(79,91,213,.4),transparent 60%),linear-gradient(160deg,#0C3953 0%,#0A2E45 60%,#0B2540 100%);
   --card:#134A6B;--tx:#E9F1F7;--mu:#A5BDCD;--bd:#24597A;--we:#0F4262;--gap:#4A2219;--gapt:#FF8F73;
-  --kpi:#fff;--avatar:#0079BF;--shadow:0 1px 2px rgba(0,0,0,.3),0 6px 18px rgba(0,0,0,.28);
-  --st-draft-bg:rgba(255,255,255,.16);--st-draft-tx:#DCE6EE;--st-review-bg:#5C4813;--st-review-tx:#FFE380;--st-approved-bg:#0F4D33;--st-approved-tx:#79F2C0;
+  --kpi:#fff;--avatar:#0079BF;
+  --card-bg:linear-gradient(180deg,#165378 0%,#124767 100%);--card-bd:rgba(255,255,255,.10);--card-hl:rgba(255,255,255,.08);
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 12px 30px -10px rgba(0,0,0,.55);
+  --st-draft-bg:rgba(255,255,255,.16);--st-draft-tx:#DCE6EE;--st-review-bg:#2C3378;--st-review-tx:#C9CEFF;--st-approved-bg:#0F4D33;--st-approved-tx:#79F2C0;
   --select-arrow:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23A5BDCD' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   color-scheme:dark
 }
 
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.45 "Inter",system-ui,-apple-system,"Segoe UI",sans-serif;font-optical-sizing:auto;padding:16px 20px;-webkit-font-smoothing:antialiased}
+body{margin:0;background:var(--bg-grad) fixed,var(--bg);min-height:100vh;color:var(--tx);font:14px/1.45 "Inter",system-ui,-apple-system,"Segoe UI",sans-serif;font-optical-sizing:auto;padding:16px 20px;-webkit-font-smoothing:antialiased}
 h1{font-weight:700;letter-spacing:-.01em}
 h1{font-size:20px;margin:0}h2{font-size:15px;margin:0 0 10px}
-.card{background:var(--card);border-radius:12px;padding:14px;margin-bottom:16px;box-shadow:var(--shadow)}
+.card{background:var(--card-bg);border:1px solid var(--card-bd);border-radius:14px;padding:14px;margin-bottom:16px;box-shadow:var(--shadow),inset 0 1px 0 var(--card-hl)}
 button,input,select,textarea{font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:6px 9px}
 button{cursor:pointer}button:hover{border-color:var(--mu)}
 /* Selectores con flecha propia: la nativa va pegada al borde. Misma separación a ambos lados. */
@@ -38,8 +46,8 @@ button:disabled{opacity:.6;cursor:default}
 .top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:16px;color:var(--on-bg)}
 .title{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .nav{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
-.nav > button,.nav > input{background:var(--on-bg-btn);color:var(--on-bg);border-color:transparent;color-scheme:dark}
-.nav > button:hover{background:var(--on-bg-btn-h);border-color:transparent}
+.nav > button,.nav > input{background:var(--on-bg-btn);color:var(--on-bg);border-color:rgba(255,255,255,.22);color-scheme:dark;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.nav > button:hover{background:var(--on-bg-btn-h);border-color:rgba(255,255,255,.4)}
 .nav > .pri{background:#fff;color:var(--navy);border-color:#fff}
 .nav > .pri:hover{background:var(--accent-soft);border-color:var(--accent-soft)}
 .icon-btn{position:relative;min-width:34px;height:34px;padding:0 8px;font-size:15px;line-height:1;display:inline-flex;align-items:center;justify-content:center}
@@ -54,7 +62,14 @@ td .icon-btn:hover{color:var(--gapt);border-color:var(--gapt)}
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin-bottom:16px}
 @media (max-width:600px){.kpis{gap:10px}.kpi{padding:10px 12px}.kpi-value{font-size:24px}}
 .kpi{margin:0;display:flex;flex-direction:column;gap:2px}
+.kpi-head{display:flex;align-items:center;gap:8px;margin-bottom:6px}
 .kpi-label{font-size:12px;color:var(--mu);font-weight:600}
+/* Icono de cada tarjeta en un degradado de la misma familia de azules */
+.kpi-icon{flex:none;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;color:#fff;font-size:13px;background:linear-gradient(135deg,var(--c1),var(--c2));box-shadow:0 4px 10px -3px var(--c1),inset 0 1px 0 rgba(255,255,255,.35)}
+.c-blue{--c1:#0079BF;--c2:#29A9E0}
+.c-cyan{--c1:#00A3BF;--c2:#4FD1E0}
+.c-indigo{--c1:#4F5BD5;--c2:#7F89F0}
+.c-sky{--c1:#0C5A94;--c2:#3D8FD1}
 .kpi-value{font-size:28px;font-weight:700;line-height:1.15;color:var(--kpi)}
 .kpi-value small{font-size:15px;font-weight:600;color:var(--mu)}
 .kpi-sub{font-size:12px;color:var(--mu)}
@@ -123,9 +138,9 @@ button.status:hover{border-color:currentColor}
 .layout main > :last-child{margin-bottom:0}
 .side{
   --card:#fff;--tx:#172B4D;--mu:#5E6C84;--bd:#DFE1E6;--we:#F4F5F7;--gap:#FFEBE6;--gapt:#BF2600;
-  --st-draft-bg:#EBECF0;--st-draft-tx:#42526E;--st-review-bg:#FFF0B3;--st-review-tx:#7A5200;--st-approved-bg:#E3FCEF;--st-approved-tx:#006644;
+  --st-draft-bg:#EBECF0;--st-draft-tx:#42526E;--st-review-bg:#E9EBFF;--st-review-tx:#3B44A8;--st-approved-bg:#E3FCEF;--st-approved-tx:#006644;
   --select-arrow:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%235E6C84' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  contain:size;min-height:420px;display:flex;flex-direction:column;background:var(--card);color:var(--tx);border-radius:12px;padding:14px;box-shadow:var(--shadow);color-scheme:light
+  contain:size;min-height:420px;display:flex;flex-direction:column;background:var(--card);color:var(--tx);border:1px solid rgba(9,30,66,.10);border-radius:14px;padding:14px;box-shadow:var(--shadow),inset 0 1px 0 #fff;color-scheme:light
 }
 .side-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
 .side-head h2{margin:0}
@@ -168,7 +183,7 @@ button.status:hover{border-color:currentColor}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   body{padding:0;background:#fff}
   .nav,.no-print{display:none!important}
-  .card{box-shadow:none;padding:0;break-inside:avoid}
+  .card{background:#fff;border:none;box-shadow:none;padding:0;break-inside:avoid}
   .kpi{border:1px solid var(--bd);padding:8px 10px}
   .sc{overflow:visible}.g{min-width:0}
   .layout.with-panel{display:block}

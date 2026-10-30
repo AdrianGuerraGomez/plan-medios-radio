@@ -1,10 +1,15 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { BRANDS } from "../config";
+import { iconFullMonth, iconGapDays, iconMissing, iconSpots } from "../lib/icons";
 import { gaps, inMonth } from "../lib/plan";
 
-function Kpi({ label, value, total, sub, tone }) {
+function Kpi({ icon, color, label, value, total, sub, tone }) {
   return (
     <div className={`card kpi${tone ? ` ${tone}` : ""}`}>
-      <span className="kpi-label">{label}</span>
+      <span className="kpi-head">
+        <span className={`kpi-icon ${color}`}><FontAwesomeIcon icon={icon} /></span>
+        <span className="kpi-label">{label}</span>
+      </span>
       <span className="kpi-value">{value}{total !== undefined && <small> / {total}</small>}</span>
       {sub && <span className="kpi-sub">{sub}</span>}
     </div>
@@ -28,11 +33,15 @@ export default function Kpis({ spots, M }) {
   return (
     <div className="kpis">
       <Kpi
+        icon={iconSpots}
+        color="c-blue"
         label="Cuñas este mes"
         value={monthSpots.length}
         sub={withSpots.length ? `en ${withSpots.length} ${withSpots.length === 1 ? "marca" : "marcas"}` : "Ninguna planificada"}
       />
       <Kpi
+        icon={iconFullMonth}
+        color="c-cyan"
         label="Marcas con mes completo"
         value={fullMonth.length}
         total={BRANDS.length}
@@ -40,12 +49,16 @@ export default function Kpis({ spots, M }) {
         sub={fullMonth.length ? fullMonth.map(b => b.brand).join(", ") : "Ninguna todavía"}
       />
       <Kpi
+        icon={iconMissing}
+        color="c-indigo"
         label="Marcas sin cuña"
         value={missing.length}
         tone={missing.length ? "danger" : "good"}
         sub={missing.length ? missing.map(b => b.brand).join(", ") : "Todas tienen cuña"}
       />
       <Kpi
+        icon={iconGapDays}
+        color="c-sky"
         label="Días sin cobertura"
         value={gapDays}
         tone={gapDays ? "danger" : undefined}
