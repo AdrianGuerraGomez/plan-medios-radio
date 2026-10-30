@@ -1,4 +1,6 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { BRANDS } from "../config";
+import { iconAdd, iconDelete } from "../lib/icons";
 import { spotError } from "../lib/plan";
 
 function SpotRow({ spot, onChange, onFullMonth, onDelete }) {
@@ -20,7 +22,7 @@ function SpotRow({ spot, onChange, onFullMonth, onDelete }) {
       <td><input aria-label="Notas" {...field("note")} /></td>
       <td style={{ whiteSpace: "nowrap", width: 150 }}>
         <button onClick={onFullMonth} title="Todo el mes">Mes completo</button>{" "}
-        <button onClick={onDelete} title="Eliminar" aria-label="Eliminar">✕</button>
+        <button onClick={onDelete} title="Eliminar" aria-label="Eliminar" className="icon-btn"><FontAwesomeIcon icon={iconDelete} /></button>
       </td>
     </tr>
   );
@@ -55,7 +57,7 @@ export default function SpotsTable({ rows, onUpdate, onFullMonth, onDelete, onAd
           {invalid === 1 ? "Hay 1 cuña" : `Hay ${invalid} cuñas`} con fechas incompletas o al revés (en rojo). No se guardan hasta que se corrijan.
         </div>
       )}
-      <div style={{ marginTop: 10 }}><button className="pri" onClick={onAdd}>+ Añadir cuña</button></div>
+      <div style={{ marginTop: 10 }}><button className="pri" onClick={onAdd}><FontAwesomeIcon icon={iconAdd} /> Añadir cuña</button></div>
       <div className="hint">
         Cambio de oferta a mitad de mes: acorta la fecha de fin de la cuña actual y añade otra de la misma marca con las nuevas fechas.
         Para el PDF, en el diálogo de impresión elige «Guardar como PDF».

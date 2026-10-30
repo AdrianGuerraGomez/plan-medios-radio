@@ -1,4 +1,6 @@
 import { useCallback, useRef, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { iconCaret, iconCheck } from "../lib/icons";
 import { STATUSES, STATUS_ORDER } from "../lib/status";
 import { useDismiss } from "../lib/useDismiss";
 
@@ -22,13 +24,13 @@ export default function StatusBadge({ status, onChange }) {
         aria-haspopup="menu"
         aria-expanded={open}
       >
-        {STATUSES[status].label}<span className="caret no-print" aria-hidden>▾</span>
+        {STATUSES[status].label}<FontAwesomeIcon icon={iconCaret} className="caret no-print" />
       </button>
       {open && (
         <div className="menu menu-left" role="menu">
           {STATUS_ORDER.map(s => (
             <button key={s} role="menuitemradio" aria-checked={s === status} className="status-option" onClick={() => choose(s)}>
-              <i className={`dot status-dot status-${s}`} />{STATUSES[s].label}{s === status && " ✓"}
+              <i className={`dot status-dot status-${s}`} />{STATUSES[s].label}{s === status && <FontAwesomeIcon icon={iconCheck} className="check" />}
             </button>
           ))}
         </div>

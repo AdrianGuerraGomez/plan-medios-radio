@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { iconClose } from "../lib/icons";
 import { formatDateTime, ymTitle } from "../lib/format";
 import { STATUSES, STATUS_ORDER } from "../lib/status";
 
@@ -59,7 +61,7 @@ function Composer({ profiles, me, status, onPost }) {
         {mentions.map(id => (
           <span key={id} className="chip">
             {emailOf(id)}
-            <button type="button" onClick={() => setMentions(m => m.filter(x => x !== id))} aria-label={`Quitar a ${emailOf(id)}`}>×</button>
+            <button type="button" onClick={() => setMentions(m => m.filter(x => x !== id))} aria-label={`Quitar a ${emailOf(id)}`}><FontAwesomeIcon icon={iconClose} /></button>
           </span>
         ))}
         {available.length > 0 && (
@@ -99,7 +101,7 @@ export default function CommentsPanel({ ym, me, profiles, thread, onClose }) {
     <aside className="side no-print" aria-label="Comentarios del mes">
       <div className="side-head">
         <h2>Comentarios · {ymTitle(ym)}</h2>
-        <button className="icon-btn" onClick={onClose} title="Cerrar comentarios" aria-label="Cerrar comentarios">×</button>
+        <button className="icon-btn" onClick={onClose} title="Cerrar comentarios" aria-label="Cerrar comentarios"><FontAwesomeIcon icon={iconClose} /></button>
       </div>
       {error && <div className="warn small">{error}</div>}
       <ul className="comments" ref={listRef}>

@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { iconComments, iconNext, iconPrev, iconPrint } from "../lib/icons";
 import { BRANDS } from "../config";
 import { inMonth, monthInfo, monthTitle, nextMonthKey, shiftMonthKey, spotError } from "../lib/plan";
 import { useSpots } from "../lib/useSpots";
@@ -6,8 +8,10 @@ import { useMonthThread } from "../lib/useMonthThread";
 import { useProfiles } from "../lib/useProfiles";
 import CommentsPanel from "./CommentsPanel";
 import Gantt from "./Gantt";
+import Kpis from "./Kpis";
 import SpotsTable from "./SpotsTable";
 import StatusBadge from "./StatusBadge";
+import ThemeToggle from "./ThemeToggle";
 import UserMenu from "./UserMenu";
 
 const MONTH_KEY = "planRadio.month";
@@ -77,56 +81,61 @@ export default function PlanPage({ user, onSignOut }) {
   };
 
   return (
-    <div className={`layout${panelOpen ? " with-panel" : ""}`}>
-      <main>
-        <div className="top">
-          <div className="title">
-            <h1>Radio — {monthTitle(M)}</h1>
-            <StatusBadge status={thread.status} onChange={s => thread.post({ body: "", status: s })} />
-          </div>
-          <div className="nav">
-            <button onClick={() => setYm(shiftMonthKey(ym, -1))} title="Mes anterior" aria-label="Mes anterior">‹</button>
-            <input type="month" value={ym} onChange={e => e.target.value && setYm(e.target.value)} aria-label="Mes" />
-            <button onClick={() => setYm(shiftMonthKey(ym, 1))} title="Mes siguiente" aria-label="Mes siguiente">›</button>
-            <button className="pri" onClick={() => window.print()}>🖨 Imprimir / Guardar PDF</button>
-            <button
-              className={`icon-btn${panelOpen ? " active" : ""}`}
-              onClick={() => setPanelOpen(o => !o)}
-              title={panelOpen ? "Ocultar comentarios" : thread.unread ? unreadLabel : "Ver comentarios"}
-              aria-label={thread.unread ? `Comentarios del mes (${unreadLabel})` : "Comentarios del mes"}
-              aria-pressed={panelOpen}
-            >
-              💬{!panelOpen && thread.unread > 0 && <span className="count">{thread.unread > 9 ? "9+" : thread.unread}</span>}
-            </button>
-            <UserMenu email={user.email} saving={saving} onSignOut={handleSignOut} />
-          </div>
+    <>
+      <header className="top">
+        <div className="title">
+          <h1>Radio — {monthTitle(M)}</h1>
+          <StatusBadge status={thread.status} onChange={s => thread.post({ body: "", status: s })} />
         </div>
+        <div className="nav">
+          <button onClick={() => setYm(shiftMonthKey(ym, -1))} title="Mes anterior" aria-label="Mes anterior"><FontAwesomeIcon icon={iconPrev} /></button>
+          <input type="month" value={ym} onChange={e => e.target.value && setYm(e.target.value)} aria-label="Mes" />
+          <button onClick={() => setYm(shiftMonthKey(ym, 1))} title="Mes siguiente" aria-label="Mes siguiente"><FontAwesomeIcon icon={iconNext} /></button>
+          <button className="pri" onClick={() => window.print()}><FontAwesomeIcon icon={iconPrint} /> Imprimir / Guardar PDF</button>
+          <button
+            className={`icon-btn${panelOpen ? " active" : ""}`}
+            onClick={() => setPanelOpen(o => !o)}
+            title={panelOpen ? "Ocultar comentarios" : thread.unread ? unreadLabel : "Ver comentarios"}
+            aria-label={thread.unread ? `Comentarios del mes (${unreadLabel})` : "Comentarios del mes"}
+            aria-pressed={panelOpen}
+          >
+            <FontAwesomeIcon icon={iconComments} />{!panelOpen && thread.unread > 0 && <span className="count">{thread.unread > 9 ? "9+" : thread.unread}</span>}
+          </button>
+          <ThemeToggle />
+          <UserMenu email={user.email} saving={saving} onSignOut={handleSignOut} />
+        </div>
+      </header>
 
-        {error && (
-          <div className="alert no-print">
-            {error} <button onClick={() => { clearError(); reload(); }}>Reintentar</button>
-          </div>
-        )}
-
-        {loading ? (
-          <div className="card hint">Cargando plan…</div>
-        ) : (
-          <>
-            <Gantt spots={spots} M={M} />
-            <SpotsTable
-              rows={rows}
-              onUpdate={updateSpot}
-              onFullMonth={id => updateSpot(id, { start: M.first, end: M.last })}
-              onDelete={handleDelete}
-              onAdd={handleAdd}
-            />
-          </>
-        )}
-      </main>
-
-      {panelOpen && (
-        <CommentsPanel ym={ym} me={user.id} profiles={profiles} thread={thread} onClose={() => setPanelOpen(false)} />
+      {error && (
+        <div className="alert no-print">
+          {error} <button onClick={() => { clearError(); reload(); }}>Reintentar</button>
+        </div>
       )}
-    </div>
+
+      {/* Contenido y comentarios en la misma fila: el panel toma la altura del contenido. */}
+      <div className={`layout${panelOpen ? " with-panel" : ""}`}>
+        <main>
+          {loading ? (
+            <div className="card hint">Cargando plan…</div>
+          ) : (
+            <>
+              <Kpis spots={spots} M={M} />
+              <Gantt spots={spots} M={M} />
+              <SpotsTable
+                rows={rows}
+                onUpdate={updateSpot}
+                onFullMonth={id => updateSpot(id, { start: M.first, end: M.last })}
+                onDelete={handleDelete}
+                onAdd={handleAdd}
+              />
+            </>
+          )}
+        </main>
+
+        {panelOpen && (
+          <CommentsPanel ym={ym} me={user.id} profiles={profiles} thread={thread} onClose={() => setPanelOpen(false)} />
+        )}
+      </div>
+    </>
   );
 }
